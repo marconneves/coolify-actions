@@ -11,7 +11,11 @@ async function run(): Promise<void> {
 
     core.debug(`Resolved url is ${url}`);
     core.debug(`Resolved applicationId is ${applicationId}`);
+
+    core.setOutput('out', 'put')
   } catch (err) {
     core.setFailed('Has a Error')
   }
 }
+
+run()
