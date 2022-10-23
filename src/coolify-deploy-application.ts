@@ -1,20 +1,40 @@
 import * as core from '@actions/core'
-// import * as artifact from '@actions/artifact'
 // import * as os from 'os'
 // import {resolve} from 'path'
 import {Inputs} from './constants'
+import axios, { AxiosError } from 'axios';
 
 async function run(): Promise<void> {
   try {
-    const url = core.getInput(Inputs.Url, {required: false});
-    const applicationId = core.getInput(Inputs.ApplicationId, {required: false});
+    const url = core.getInput(Inputs.CoolifyUrl, {required: false});
+    const applicationId = core.getInput(Inputs.CoolifyAppId, {required: false});
+    const token = core.getInput(Inputs.CoolifyToken, {required: false});
+    const branch = process.env.GITHUB_REF_NAME;
 
-    core.debug(`Resolved url is ${url}`);
-    core.debug(`Resolved applicationId is ${applicationId}`);
+    core.debug(`Start deploy of application ${applicationId} of branch ${branch}`);
 
-    core.setOutput('out', 'put')
-  } catch (err) {
-    core.setFailed('Has a Error')
+   const { data } = await axios({
+      method: 'post',
+      url: `${url}/api/v1/applications/${applicationId}/deploy`,
+      headers: { 
+        'Authorization': `Bearer ${token}`, 
+        'Content-Type': 'application/json'
+      },
+      data: {
+        "pullmergeRequestId": null,
+        "branch": branch,
+        "forceRebuild": true
+      }
+    });
+
+    core.setOutput('build-id', data.buildId);
+  } catch (error) {
+    if(axios.isAxiosError(error)){
+      const axiosError = error as AxiosError<{message: string}>;
+
+      return core.setFailed(`Status of Error: ${axiosError.response?.status}, message ${JSON.stringify(axiosError.response?.data?.message)}`);
+    }
+    return core.setFailed('Has unknown error');
   }
 }
 

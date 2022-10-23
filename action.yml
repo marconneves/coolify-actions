@@ -1,0 +1,16 @@
+name: 'Coolify - Application Deploy'
+description: 'This is for get a deploy manual in applications'
+author: 'The Mark'
+inputs: 
+  coolify-url:
+    description: 'Base url of coolify'
+    required: true
+  coolify-app-id:
+    description: 'Application ID'
+    required: true
+  coolify-token:
+    description: 'Bearer Token'
+    required: true
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

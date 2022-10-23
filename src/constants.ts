@@ -1,6 +1,7 @@
 export enum Inputs {
-  Url = 'url',
-  ApplicationId = 'applicationId'
+  CoolifyUrl = 'coolify-url',
+  CoolifyAppId = 'coolify-app-id',
+  CoolifyToken = 'coolify-token'
 }
 
 export enum Outputs {

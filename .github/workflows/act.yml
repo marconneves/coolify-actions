@@ -5,9 +5,11 @@ jobs:
     runs-on: ubuntu-latest
     name: We test it locally with act
     steps:
+      - uses: actions/checkout@v2
       - name: Deploy on Coolify with act
         uses: ./ # Uses an action in the root directory
         id: coolify
         with:
-          url: https://baymax.b4you.com.br
-          applicationId: cl9j6nvl1005fo9bgi21yh7y6
+          coolify-url: 
+          coolify-app-id: 
+          coolify-token: 
