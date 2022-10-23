@@ -1,6 +1,6 @@
 {
   "name": "coolify-deploy-application",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "This is for get a deploy manual in applications",
   "main": "dist/index.js",
   "scripts": {

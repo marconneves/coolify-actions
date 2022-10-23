@@ -1,7 +1,8 @@
 name: 'Coolify - Application Deploy'
 description: 'This is for get a deploy manual in applications'
-icon: arrow-up
-color: purple
+branding:
+  icon: 'arrow-up'
+  color: 'purple'
 author: 'The Mark'
 inputs: 
   coolify-url:
