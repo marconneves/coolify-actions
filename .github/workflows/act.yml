@@ -10,6 +10,6 @@ jobs:
         uses: ./ # Uses an action in the root directory
         id: coolify
         with:
-          coolify-url: 
-          coolify-app-id: 
-          coolify-token: 
+          coolify-url: ${{ secrets.COOLIFY_URL }}
+          coolify-app-id: ${{ secrets.COOLIFY_APP_ID }}
+          coolify-token: ${{ secrets.COOLIFY_TOKEN }}

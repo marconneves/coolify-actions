@@ -34,6 +34,7 @@ async function run(): Promise<void> {
 
       return core.setFailed(`Status of Error: ${axiosError.response?.status}, message ${JSON.stringify(axiosError.response?.data?.message)}`);
     }
+    
     return core.setFailed('Has unknown error');
   }
 }
