@@ -10,11 +10,12 @@ You can try it out before installing it: [Live demo](https://demo.coolify.io/)
 
 
 ## Inputs
-| Name              | Required                      | Description                                                                       |
-|-------------------|:-----------------------------:|-----------------------------------------------------------------------------------|
-| coolify-url       |    <ul><li>- [x] </li></ol>   | Url of your coolify. Ex. https://coolify.com || http://131.212.31.123:3000        |
-| coolify-app-id    |    <ul><li>- [x] </li></ol>   | Application id                                                                    |
-| coolify-token     |    <ul><li>- [x] </li></ol>   | Bearer token base                                                                 |
+| Name              | Required                      | Default | Description                                                                      |
+|-------------------|:-----------------------------:|---------|----------------------------------------------------------------------------------|
+| coolify-url       |    <ul><li>- [x] </li></ol>   |         | Url of your coolify. Ex. https://coolify.com || http://131.212.31.123:3000       |
+| coolify-app-id    |    <ul><li>- [x] </li></ol>   |         | Application id                                                                   |
+| coolify-token     |    <ul><li>- [x] </li></ol>   |         | Bearer token base                                                                |
+| await-finish       |    <ul><li>- [ ] </li></ol>   | true    | Your can await logs and output of Deploy?                                        |
 
 ## Outputs
 

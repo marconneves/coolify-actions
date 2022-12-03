@@ -6,9 +6,14 @@ import axios, { AxiosError } from 'axios';
 
 async function run(): Promise<void> {
   try {
-    const url = core.getInput(Inputs.CoolifyUrl, {required: false});
-    const applicationId = core.getInput(Inputs.CoolifyAppId, {required: false});
-    const token = core.getInput(Inputs.CoolifyToken, {required: false});
+    Object.keys(process.env).forEach((key) => {
+      core.debug(key);
+    })
+
+    const url = core.getInput(Inputs.CoolifyUrl, {required: true});
+    const applicationId = core.getInput(Inputs.CoolifyAppId, {required: true});
+    const token = core.getInput(Inputs.CoolifyToken, {required: true});
+    const awaitFinish = core.getInput(Inputs.AwaitFinish, {required: false}) || true;
     const branch = process.env.GITHUB_REF_NAME;
 
     core.debug(`Start deploy of application ${applicationId} of branch ${branch}`);
@@ -28,6 +33,17 @@ async function run(): Promise<void> {
     });
 
     core.setOutput('build-id', data.buildId);
+
+    if(awaitFinish){
+      /**
+       * 1 - Pega status
+       *  se em queue - espera 5 segundos e tenta novamente
+       *    esperar no máximo 1 minuto para iniciar
+       * 2 - Pega log e imprime
+       *  Se finalizar com sucesso, avisar
+       *  Se der erro lançar exessão
+       */
+    }
   } catch (error) {
     if(axios.isAxiosError(error)){
       const axiosError = error as AxiosError<{message: string}>;
