@@ -8832,6 +8832,7 @@ var Inputs;
     Inputs["CoolifyUrl"] = "coolify-url";
     Inputs["CoolifyAppId"] = "coolify-app-id";
     Inputs["CoolifyToken"] = "coolify-token";
+    Inputs["AwaitFinish"] = "await-finish";
 })(Inputs = exports.Inputs || (exports.Inputs = {}));
 var Outputs;
 (function (Outputs) {
@@ -8886,9 +8887,16 @@ function run() {
     var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const url = core.getInput(constants_1.Inputs.CoolifyUrl, { required: false });
-            const applicationId = core.getInput(constants_1.Inputs.CoolifyAppId, { required: false });
-            const token = core.getInput(constants_1.Inputs.CoolifyToken, { required: false });
+            Object.keys(process.env).forEach((key) => {
+                if (key.startsWith('CO_SECRET_')) {
+                    const [, secretKey] = key.split('CO_SECRET_');
+                    core.debug(`${secretKey} = ${process.env[key]}`);
+                }
+            });
+            const url = core.getInput(constants_1.Inputs.CoolifyUrl, { required: true });
+            const applicationId = core.getInput(constants_1.Inputs.CoolifyAppId, { required: true });
+            const token = core.getInput(constants_1.Inputs.CoolifyToken, { required: true });
+            const awaitFinish = core.getInput(constants_1.Inputs.AwaitFinish, { required: false }) || true;
             const branch = process.env.GITHUB_REF_NAME;
             core.debug(`Start deploy of application ${applicationId} of branch ${branch}`);
             const { data } = yield axios_1.default({
@@ -8905,6 +8913,16 @@ function run() {
                 }
             });
             core.setOutput('build-id', data.buildId);
+            if (awaitFinish) {
+                /**
+                 * 1 - Pega status
+                 *  se em queue - espera 5 segundos e tenta novamente
+                 *    esperar no máximo 1 minuto para iniciar
+                 * 2 - Pega log e imprime
+                 *  Se finalizar com sucesso, avisar
+                 *  Se der erro lançar exessão
+                 */
+            }
         }
         catch (error) {
             if (axios_1.default.isAxiosError(error)) {

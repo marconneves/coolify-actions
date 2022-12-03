@@ -9,6 +9,9 @@ jobs:
       - name: Deploy on Coolify with act
         uses: ./ # Uses an action in the root directory
         id: coolify
+        env:
+          CO_SECRET_API_KEY: "apiKey"
+          CO_SECRET_BASE_URL: "https://google.com"
         with:
           coolify-url: ${{ secrets.COOLIFY_URL }}
           coolify-app-id: ${{ secrets.COOLIFY_APP_ID }}

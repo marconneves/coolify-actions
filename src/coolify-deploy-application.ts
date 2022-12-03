@@ -6,10 +6,6 @@ import axios, { AxiosError } from 'axios';
 
 async function run(): Promise<void> {
   try {
-    Object.keys(process.env).forEach((key) => {
-      core.debug(key);
-    })
-
     const url = core.getInput(Inputs.CoolifyUrl, {required: true});
     const applicationId = core.getInput(Inputs.CoolifyAppId, {required: true});
     const token = core.getInput(Inputs.CoolifyToken, {required: true});
@@ -31,6 +27,16 @@ async function run(): Promise<void> {
         "forceRebuild": true
       }
     });
+
+    const secrets: {key: string, value?: string}[] = [];
+
+    Object.keys(process.env).forEach((key) => {
+      const [,secretKey] = key.split('CO_SECRET_');
+      if(secretKey){
+        core.debug(`${secretKey} = ${process.env[key]}`);
+        secrets.push({key: secretKey, value: process.env[key]});
+      }
+    })
 
     core.setOutput('build-id', data.buildId);
 
